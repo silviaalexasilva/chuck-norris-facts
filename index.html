@@ -23,6 +23,7 @@
 
       <div class="content" id="chuck-norris">
       </div>
+      <button id="myBtn">Reload</button>
     </div>
 
   </section>
@@ -31,6 +32,29 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
   <script>
 
+function fetchChuckNorrisJokesJSON() {
+    const url = `https://api.chucknorris.io/jokes/random`;
+    axios.get(url)
+        .then(function(response) {
+            return response.data;
+        })
+        .then(function(joke) {
+            console.log('data decoded from JSON:', joke);
+
+            const jokeHtml = `
+        <p><strong>${joke.value}</strong></p>
+        <img src="${joke.icon_url}" />
+      `;
+            document.querySelector('#chuck-norris').innerHTML = jokeHtml;
+
+        });
+}
+
+fetchChuckNorrisJokesJSON();
+
+document.getElementById("myBtn").addEventListener("click", function(){
+    fetchChuckNorrisJokesJSON();
+});
   </script>
 </body>
 
